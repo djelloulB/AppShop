@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/teddie_link"
+        android:title="@string/teddies" />
+    <item
+        android:id="@+id/camera_link"
+        android:title="@string/cameras" />
+    <item
+    android:id="@+id/furniture_link"
+    android:icon="@android:drawable/ic_menu_share"
+    android:orderInCategory="1"
+    android:title="@string/furnitures"
+    app:showAsAction="never"/>
+
+</menu>

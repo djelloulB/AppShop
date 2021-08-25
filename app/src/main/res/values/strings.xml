@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AppShop</string>
+    <string name="settings_menu">Menu</string>
+    <string name="cameras">Appareil photo</string>
+    <string name="furnitures">Meubles</string>
+    <string name="teddies">Peluches</string>
+</resources>
