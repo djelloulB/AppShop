@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,33 +28,33 @@ import fr.hb.appshop.models.Product;
 import fr.hb.appshop.models.Teddie;
 
 public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItemAdapter.ViewHolder> {
-    private Context context;
+    //private Context context;
     private List<Teddie> data;
+    private List<Camera> data2;
     private WeakReference<OnItemClickListener> listener;
     //private int recyclerItemRes;
     //private Context context;
     //private Product product;
 
 
-
-
-
-//    public ProductListItemAdapter(Context context,List<Teddie> productList, int product_item) {
-//        this.context = context;
-//        this.data = productList;
-//    }
-
-    public ProductListItemAdapter(List<Teddie> productList) {
-        this.data = productList;
-        //this.listener = new WeakReference<>(listener);
+    //Constructeur par defaut
+    public ProductListItemAdapter() {
     }
 
+    //Constructeur 2
 
+//    public ProductListItemAdapter(List<Teddie> teddiesList) {
+//        this.data = teddiesList;
+//    }
 
+    public ProductListItemAdapter(List<Teddie> data, OnItemClickListener listener) {
+        this.data = data;
+        this.listener = new WeakReference<>(listener);
+    }
 
     public  class ViewHolder extends  RecyclerView.ViewHolder{
 
-        public TextView mainTvName, mainTvPrice;
+        public TextView mainTvName, mainTvPrice,mainTvDescription;
         public ImageView mainIvImage;
 
         public ViewHolder(@NonNull View itemView) {
@@ -60,7 +62,7 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
             mainTvName = itemView.findViewById(R.id.main_tv_name);
             mainTvPrice = itemView.findViewById(R.id.main_tv_price);
             mainIvImage = itemView.findViewById(R.id.main_iv_image);
-
+            mainTvDescription = itemView.findViewById(R.id.main_tv_description);
         }
     }
 
@@ -74,31 +76,44 @@ public class ProductListItemAdapter extends RecyclerView.Adapter<ProductListItem
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Teddie teddie = data.get(position);
+        Product product = data.get(position);
 
+        if (product instanceof Teddie){
 
-        if (teddie.getImageUrl() != null) {
-            Glide.with(holder.mainIvImage).load(teddie.getImageUrl()).into(holder.mainIvImage);
+            if (product.getImageUrl() != null) {
+                Glide.with(holder.mainIvImage).load(( (Teddie) product).getImageUrl()).into(holder.mainIvImage);
+            }
+            holder.mainTvName.setText(( (Teddie) product).getName());
+            holder.mainTvPrice.setText(String.valueOf(( (Teddie) product).getPrice()));
+            holder.mainTvDescription.setText(( (Teddie) product).getDescription());
+
+        }else if(product instanceof Camera){
+
+            if (product.getImageUrl() != null) {
+                Glide.with(holder.mainIvImage).load(( (Camera) product).getImageUrl()).into(holder.mainIvImage);
+            }
+            holder.mainTvName.setText(( (Camera) product).getName());
+            holder.mainTvPrice.setText(String.valueOf(( (Camera) product).getPrice()));
+
+        } else if (product instanceof Furniture) {
+
+            //TODO:
+
         }
-        holder.mainTvName.setText(teddie.getName());
-        holder.mainTvPrice.setText(String.valueOf(teddie.getPrice()));
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Clicked", Toast.LENGTH_SHORT).show();
                 if (listener.get() != null){
-                    listener.get().onClick(teddie);
+                    listener.get().onClick(product);
+                    Log.d("Tag",product.toString() );
                 }
-            }
+           }
         });
 
-//        if (product instanceof Teddie){
-//            //TODO:
-//        }else if(product instanceof Camera){
-//            //TODO:
-//        } else if (product instanceof Furniture) {
-//            //TODO:
-//        }
+
     }
 
     @Override

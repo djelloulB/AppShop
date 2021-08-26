@@ -49,32 +49,6 @@ public class MainActivity extends AppCompatActivity  {
         rv.setHasFixedSize(true);
 
 
-
-
-//////////////////////// Retrofit Activity /////////////////////////////
-
-        Call<List<Teddie>> call = teddiesService.fetchAllTeddies();
-
-        Log.d("Tag",call.toString());
-
-        call.enqueue(new Callback<List<Teddie>>() {
-
-            @Override
-            public void onResponse(Call<List<Teddie>> call, Response<List<Teddie>> response) {
-
-                // Create and using adapter                                               Context context,List<Teddie> productList, int product_item
-                ProductListItemAdapter productRvAdapter = new ProductListItemAdapter(response.body());
-                rv.setAdapter(productRvAdapter);
-            }
-
-
-            @Override
-            public void onFailure(Call<List<Teddie>> call, Throwable t) {
-
-                Snackbar.make(findViewById(android.R.id.content), "Une erreur est survenue", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
         ProductListItemAdapter.OnItemClickListener clickListener = new ProductListItemAdapter.OnItemClickListener() {
 
 
@@ -87,10 +61,34 @@ public class MainActivity extends AppCompatActivity  {
 
         };
 
+//////////////////////// Retrofit Activity /////////////////////////////
+
+        Call<List<Teddie>> call = teddiesService.fetchAllTeddies();
+
+        call.enqueue(new Callback<List<Teddie>>() {
+
+            @Override
+            public void onResponse(Call<List<Teddie>> call, Response<List<Teddie>> response) {
+
+                // Create and using adapter Context context,List<Teddie> productList, int product_item
+                ProductListItemAdapter productRvAdapter = new ProductListItemAdapter(response.body(), clickListener );
+                rv.setAdapter(productRvAdapter);
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Teddie>> call, Throwable t) {
+
+                Snackbar.make(findViewById(android.R.id.content), "Une erreur est survenue", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+
+
     }
-        public interface OnItemClickListener {
-            void onClick(Product productClicked);
-        }
+//    public interface OnItemClickListener {
+//        void onClick(Product productClicked);
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

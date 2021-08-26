@@ -16,6 +16,10 @@ public abstract class Product {
     @SerializedName("imageUrl")
     private String imageUrl;
 
+    //constructeur
+    public Product() {
+    }
+
     public Product(String _id, String name, String description, float price, String imageUrl) {
         this._id = _id;
         this.name = name;
@@ -23,7 +27,7 @@ public abstract class Product {
         this.price = price;
         this.imageUrl = imageUrl;
     }
-
+//guetters and setters
     public String get_id() {
         return _id;
     }
@@ -64,3 +68,4 @@ public abstract class Product {
         this.imageUrl = imageUrl;
     }
 }
+
