@@ -8,4 +8,5 @@ public class Teddie extends  Product{
         super(id, name, description, price, imageUrl);
 
     }
+
 }

@@ -25,7 +25,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity  {
 
-    private static final String KEY_BUNDLE_PRODUCT_ID = "KEY_BUNDLE_PRODUCT_ID";
+
+    public static final String KEY_BUNDLE_PRODUCT_ID = "KEY_BUNDLE_PRODUCT_ID";
 
     private TeddieRetrofitService teddiesService = RetrofitApi.getInstance();
 

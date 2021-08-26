@@ -1,10 +1,12 @@
 package fr.hb.appshop.models;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public abstract class Product {
+public abstract class Product implements Parcelable {
     @SerializedName("_id")
     private String _id;
     @SerializedName("name")
@@ -67,5 +69,38 @@ public abstract class Product {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this._id);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeFloat(this.price);
+        dest.writeString(this.imageUrl);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this._id = source.readString();
+        this.name = source.readString();
+        this.description = source.readString();
+        this.price = source.readFloat();
+        this.imageUrl = source.readString();
+    }
+
+    protected Product(Parcel in) {
+        this._id = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.price = in.readFloat();
+        this.imageUrl = in.readString();
+    }
+
+
 }
 
